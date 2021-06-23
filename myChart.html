@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>차트 메서드 체이닝</title>
+        <script src="./src/js/chart.min.js"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+        ></script>
+        <style>
+            #root {
+                width: 1500px;
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script>
+            var getData = [
+                {
+                    labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+                    datasets: [
+                        {
+                            label: "test",
+                            data: [1, 4, 6, 2, 7],
+                            borderColor: "black",
+                            backgroundColor: "red",
+                        },
+                    ],
+                },
+                {
+                    labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+                    datasets: [
+                        {
+                            label: "test",
+                            data: [1, 4, 6, 2, 7],
+                            borderColor: "black",
+                            backgroundColor: "red",
+                        },
+                        {
+                            label: "test2",
+                            data: [5, 3, 9, 4, 6],
+                            borderColor: "black",
+                            backgroundColor: "blue",
+                        },
+                    ],
+                },
+                {
+                    labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+                    datasets: [
+                        {
+                            label: "test",
+                            data: [1, 4, 6, 2, 7],
+                            borderColor: "black",
+                            backgroundColor: "red",
+                        },
+                    ],
+                },
+                {
+                    labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+                    datasets: [
+                        {
+                            label: "test",
+                            data: [1, 4, 6, 2, 7],
+                            borderColor: "black",
+                            backgroundColor: "red",
+                        },
+                    ],
+                },
+                {
+                    labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+                    datasets: [
+                        {
+                            label: "test",
+                            data: [1, 4, 6, 2, 7],
+                            borderColor: "black",
+                            backgroundColor: "red",
+                        },
+                    ],
+                },
+                {
+                    labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+                    datasets: [
+                        {
+                            label: "test",
+                            data: [1, 4, 6, 2, 7],
+                            borderColor: "black",
+                            backgroundColor: "red",
+                        },
+                    ],
+                },
+            ];
+
+            const chartHanlder = {
+                target: "",
+                data: "",
+                options: {
+                    type: "",
+                    title: "",
+                    legend: "",
+                    axis: "",
+                },
+                canvasSize: {
+                    width: "",
+                    height: "",
+                },
+                response: true,
+
+                setTarget(target) {
+                    const canvas = document.createElement("canvas");
+                    canvas.width = this.width;
+                    canvas.height = this.height;
+                    this.target = document
+                        .querySelector(target)
+                        .appendChild(canvas);
+
+                    return this;
+                },
+                setData(data) {
+                    this.data = data;
+                    return this;
+                },
+                setOptions(options) {
+                    this.options = options;
+                    return this;
+                },
+                setCanvasSize(width, height) {
+                    if (width > 0 || height > 0) {
+                        this.response = false;
+                    }
+
+                    console.log(this.response);
+                    this.target.width = width;
+                    this.target.height = height;
+                    console.log(this.target.width);
+                    return this;
+                },
+                showChart() {
+                    new Chart(this.target, {
+                        type: this.options.type || "line",
+                        data: this.data,
+                        options: {
+                            responsive: this.response,
+                            indexAxis: this.options.axis,
+                            plugins: {
+                                legend: {
+                                    position: this.options.legend,
+                                },
+                                title: {
+                                    display: !this.options.title ? false : true,
+                                    text: this.options.title,
+                                },
+                            },
+                        },
+                    });
+                    this.target = "";
+                    this.data = "";
+                    this.options = {
+                        type: "",
+                        title: "",
+                        legend: "",
+                        axes: "",
+                    };
+                    this.canvasSize = {
+                        width: "",
+                        height: "",
+                    };
+                    this.response = true;
+                },
+            };
+
+            chartHanlder
+                .setTarget("#root")
+                .setData(getData[0])
+                .setCanvasSize(500, 500)
+                .setOptions({
+                    type: "pie",
+                    legend: "right",
+                    title: "Sample Chart",
+                })
+                .showChart();
+
+            chartHanlder
+                .setTarget("#root")
+                .setData(getData[1])
+                .setCanvasSize(500, 500)
+                .setOptions({
+                    type: "bar",
+                    legend: "right",
+                    title: "Sample Chart",
+                    axis: "y",
+                })
+                .showChart();
+        </script>
+    </body>
+</html>
